@@ -1,0 +1,8 @@
+# ignore virtual environment an pycache
+myenv/
+__pycache__/
+test_script.py
+
+# Ignore sample pdfs
+flyer.pdf
+ast_sci_data_tables_sample.pdf

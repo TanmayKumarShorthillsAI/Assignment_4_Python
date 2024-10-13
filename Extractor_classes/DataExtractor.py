@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from FileLoader import FileLoader
+from Loader_classes.FileLoader import FileLoader
 
 
 class DataExtractor(ABC):

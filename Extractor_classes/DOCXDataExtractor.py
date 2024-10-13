@@ -1,11 +1,10 @@
-from DataExtractor import DataExtractor
-
-# import docx
+from Extractor_classes.DataExtractor import DataExtractor
 
 
 class DOCXDataExtractor(DataExtractor):
     def __init__(self, file_loader):
         super().__init__(file_loader)
+        self.file_name = str(file_loader.loaded_doc).split("/")[-1].split(".")[0]
         self.text = []
         self.links = []
         self.images = []
@@ -16,20 +15,29 @@ class DOCXDataExtractor(DataExtractor):
         for para in doc.paragraphs:
             self.text.append(para.text)
 
-        # print(self.text)
-        return super().extract_text()
+        return self.text, self.file_name
 
     def extract_links(self):
 
-        return super().extract_links()
+        return self.links
 
     def extract_images(self):
         doc = self.file_loader.loaded_doc
 
-        return super().extract_images()
+        image_blobs = []
+
+        # Loop through all relationships in the document part (images are relationships)
+        for rel in doc.part.rels.values():
+
+            if "image" in rel.target_ref:
+                image_part = rel.target_part
+                image_blob = image_part.blob
+                image_extension = image_part.content_type.split("/")[-1]  #
+
+                self.images.append(image_blob)
+        return self.images, image_extension
 
     def extract_tables(self):
-        # tables_data = []
         doc = self.file_loader.loaded_doc
 
         for table in doc.tables:
@@ -37,7 +45,8 @@ class DOCXDataExtractor(DataExtractor):
             for row in table.rows:
                 row_data = [cell.text for cell in row.cells]
                 table_text.append(row_data)
+
+            if len(table_text):
                 self.tables.append(table_text)
 
-        # print(self.tables)
-        return super().extract_tables
+        return self.tables

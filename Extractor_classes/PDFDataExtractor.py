@@ -1,12 +1,14 @@
-from DataExtractor import DataExtractor
+from Extractor_classes.DataExtractor import DataExtractor
 
 # import fitz
+import pandas as pd
 import tabula
 
 
 class PDFDataExtractor(DataExtractor):
     def __init__(self, file_loader):
         super().__init__(file_loader)
+        self.file_name = str(file_loader.loaded_pdf).split("/")[-1].split(".")[0]
         self.text = []
         self.images = []
         self.links = []
@@ -14,18 +16,13 @@ class PDFDataExtractor(DataExtractor):
 
     # Extract text from pdf
     def extract_text(self):
-        # self.text = []
         doc = self.file_loader.loaded_pdf
 
         for page_num in range(doc.page_count):
             page = doc.load_page(page_num)
 
-            # Extract text
             self.text.append(page.get_text("text"))
-            # with open(f"page_{page_num + 1}_text.txt", "w", encoding="utf-8") as f:
-            #     f.write(text)
-        # doc.close()
-        return super().extract_text()
+        return self.text, self.file_name
 
     # Extract images from pdf
     def extract_images(self):
@@ -33,12 +30,18 @@ class PDFDataExtractor(DataExtractor):
 
         for page_num in range(doc.page_count):
             page = doc.load_page(page_num)
-            self.images = page.get_images(full=True)
+            images = page.get_images(full=True)
 
-        print(self.images)
+            # Extract and process each image
+            for img_index, img in enumerate(images):
+                xref = img[0]  # XREF of the image
+                base_image = doc.extract_image(xref)
+                image_bytes = base_image["image"]
+                image_ext = base_image["ext"]
 
-        return super().extract_images()
-        # doc.close()
+                self.images.append(image_bytes)
+
+        return self.images, image_ext
 
     # Extract links from pdf
     def extract_links(self):
@@ -46,23 +49,21 @@ class PDFDataExtractor(DataExtractor):
 
         for page_num in range(doc.page_count):
             page = doc.load_page(page_num)
-            links = []
 
             for link in page.get_links():
                 if "uri" in link:
-                    links.append(link["uri"])
+                    self.links.append(link["uri"])
 
-            self.links.append(links)
-
-        return super().extract_links()
-
-        # print(self.links[0])
+        print(self.links, len(self.links))
+        return self.links
 
     # Extract tables from pdf
     def extract_tables(self):
         doc_path = self.file_loader.file_path
 
-        self.tables = tabula.read_pdf(doc_path, pages="all", multiple_tables=True)
-        print(self.tables)
+        temp_tables = tabula.read_pdf(doc_path, pages="all", multiple_tables=True)
+        for x in temp_tables:
+            arr = [x.columns.tolist()] + x.values.tolist()
+            self.tables.append(arr)
 
-        return super().extract_tables()
+        return self.tables

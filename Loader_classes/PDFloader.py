@@ -1,4 +1,4 @@
-from FileLoader import FileLoader
+from Loader_classes.FileLoader import FileLoader
 import fitz
 
 

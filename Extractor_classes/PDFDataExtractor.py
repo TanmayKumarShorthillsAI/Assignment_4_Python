@@ -54,7 +54,6 @@ class PDFDataExtractor(DataExtractor):
                 if "uri" in link:
                     self.links.append(link["uri"])
 
-        print(self.links, len(self.links))
         return self.links
 
     # Extract tables from pdf

@@ -32,7 +32,6 @@ class PPTDataExtractor(DataExtractor):
                             if run.hyperlink and run.hyperlink.address:
                                 self.links.append(run.hyperlink.address)
 
-        print(self.links, len(self.links))
         return self.links
 
     def extract_images(self):
@@ -60,5 +59,4 @@ class PPTDataExtractor(DataExtractor):
                         table_data.append(row_data)
                     self.tables.append(table_data)
 
-        print("ppt table", self.tables)
         return self.tables

@@ -24,8 +24,6 @@ class DOCXDataExtractor(DataExtractor):
     def extract_images(self):
         doc = self.file_loader.loaded_doc
 
-        image_blobs = []
-
         # Loop through all relationships in the document part (images are relationships)
         for rel in doc.part.rels.values():
 

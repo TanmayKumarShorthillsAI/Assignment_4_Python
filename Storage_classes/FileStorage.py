@@ -2,7 +2,6 @@ from Storage_classes.Storage import Storage
 import os
 from pathlib import Path
 import csv
-import math
 
 
 class FileStorage(Storage):

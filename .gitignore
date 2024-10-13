@@ -3,6 +3,8 @@ myenv/
 __pycache__/
 test_script.py
 
-# Ignore sample pdfs
+# Ignore sample pdfs, docx
 flyer.pdf
 ast_sci_data_tables_sample.pdf
+file-sample_100kB (2).docx
+file_example_PPT_250kB.pptx

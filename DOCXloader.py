@@ -2,7 +2,7 @@ from FileLoader import FileLoader
 import docx
 
 
-class PDFloader(FileLoader):
+class DOCXloader(FileLoader):
     def __init__(self, file_path):
         super().__init__(file_path)
         self.loaded_doc = None

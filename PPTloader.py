@@ -2,7 +2,7 @@ from FileLoader import FileLoader
 import pptx
 
 
-class PDFloader(FileLoader):
+class PPTloader(FileLoader):
     def __init__(self, file_path):
         super().__init__(file_path)
         self.loaded_pptx = None

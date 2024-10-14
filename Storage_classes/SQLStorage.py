@@ -1,18 +1,25 @@
 from Storage import Storage
 import _mysql_connector
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 
 class SQLStorage(Storage):
     def __init__(self, data_extractor):
         super().__init__(data_extractor)
         self.text = data_extractor.text
+        self.text_metadata = data_extractor.text_metadata
+        self.image_metadata = data_extractor.image_metadata
+        self.links = data_extractor.links
 
     def save(self):
         connection = _mysql_connector.connect(
-            host="localhost",
-            user="root",
-            password="tanmay123",
-            database="file_extracted_data",
+            host=os.getenv("host"),
+            user=os.getenv("root"),
+            password=os.getenv("password"),
+            database=os.getenv("database"),
         )
 
         cursor = connection.cursor()

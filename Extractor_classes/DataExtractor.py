@@ -7,6 +7,13 @@ class DataExtractor(ABC):
     def __init__(self, file_loader: FileLoader):
         self.file_loader = file_loader
         self.file_loader.loadFile()
+        self.file_name = str(file_loader.file_path).split("/")[-1].split(".")[0]
+        self.text_metadata = []
+        self.image_metadata = []
+        self.text = []
+        self.images = []
+        self.links = []
+        self.tables = []
         # print(self.file_loader.loaded_pdf)
 
     @abstractmethod

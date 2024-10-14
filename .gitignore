@@ -8,8 +8,9 @@ output/
 
 test_script.py
 
-# Ignore sample pdfs, docx
+# Ignore sample pdfs, docx and other files
 *.pdf
 *.docx
 *.pptx
 *.txt
+Storage_classes/.env

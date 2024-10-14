@@ -4,13 +4,13 @@ from Extractor_classes.DataExtractor import DataExtractor
 class PPTDataExtractor(DataExtractor):
     def __init__(self, file_loader):
         super().__init__(file_loader)
-        self.file_name = str(file_loader.file_path).split("/")[-1].split(".")[0]
-        self.text_metadata = []
-        self.image_metadata = []
-        self.text = []
-        self.images = []
-        self.links = []
-        self.tables = []
+        # self.file_name = str(file_loader.file_path).split("/")[-1].split(".")[0]
+        # self.text_metadata = []
+        # self.image_metadata = []
+        # self.text = []
+        # self.images = []
+        # self.links = []
+        # self.tables = []
 
     def extract_text(self):
         doc = self.file_loader.loaded_pptx
@@ -90,10 +90,11 @@ class PPTDataExtractor(DataExtractor):
 
                         self.text_metadata.append(
                             {
-                                "Text": text,
-                                "font_size": font_size,
+                                "page_number": slide_num + 1,
+                                "text": text,
+                                # "font_size": font_size,
                                 "heading": heading,
-                                "font_name": font_name,
+                                "font": font_name,
                             }
                         )
         # print(self.text_metadata)

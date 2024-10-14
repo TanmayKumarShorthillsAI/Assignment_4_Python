@@ -10,13 +10,13 @@ import tabula
 class PDFDataExtractor(DataExtractor):
     def __init__(self, file_loader):
         super().__init__(file_loader)
-        self.file_name = str(file_loader.file_path).split("/")[-1].split(".")[0]
-        self.text_metadata = {}
-        self.image_metadata = []
-        self.text = []
-        self.images = []
-        self.links = []
-        self.tables = []
+        # self.file_name = str(file_loader.file_path).split("/")[-1].split(".")[0]
+        # self.text_metadata = {}
+        # self.image_metadata = []
+        # self.text = []
+        # self.images = []
+        # self.links = []
+        # self.tables = []
 
     # Extract text from pdf
     def extract_text(self):
@@ -99,14 +99,15 @@ class PDFDataExtractor(DataExtractor):
 
                             # Store the metadata as a dictionary for each span of text
                             span_metadata = {
+                                "page_number": page_num + 1,
                                 "text": text,
                                 "font": font,
-                                "is_heading": is_heading,
+                                "heading": is_heading,
                             }
 
-                            page_metadata.append(span_metadata)
+                            self.text_metadata.append(span_metadata)
 
-            self.text_metadata[f"page_{page_num + 1}"] = page_metadata
+            # self.text_metadata.append()[f"page_{page_num + 1}"] = page_metadata
 
         # store image metadata
         for page_num in range(doc.page_count):

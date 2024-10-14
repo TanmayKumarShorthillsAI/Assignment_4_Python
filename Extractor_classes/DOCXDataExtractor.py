@@ -6,13 +6,6 @@ from PIL import Image
 class DOCXDataExtractor(DataExtractor):
     def __init__(self, file_loader):
         super().__init__(file_loader)
-        self.file_name = str(file_loader.file_path).split("/")[-1].split(".")[0]
-        self.text_metadata = []
-        self.image_metadata = []
-        self.text = []
-        self.links = []
-        self.images = []
-        self.tables = []
 
     def is_heading(self, paragraph):
         return paragraph.style.name.startswith("Heading")
@@ -82,15 +75,17 @@ class DOCXDataExtractor(DataExtractor):
         doc = self.file_loader.loaded_doc
         for para in doc.paragraphs:
             run = para.runs[0] if para.runs else None
-            # if run and run.font:
-            # font_name = run.font.name
-            # font_size = run.font.size
-            # bold = run.font.bold
-            if self.is_heading(para):
+            if run and run.font:
+                font_name = run.font.name
+                # font_size = run.font.size
+                # bold = run.font.bold
+                heading = False
+                if self.is_heading(para):
+                    heading = True
                 self.text_metadata.append(
-                    {"Heading": {para.text}, "Level": {para.style.name}}
+                    {"text": para.text, "font": font_name, "heading": heading}
                 )
-
+        # print(self.text_metadata)
         # image metadata
         for rel in doc.part.rels.values():
 

@@ -24,3 +24,7 @@ class DataExtractor(ABC):
     @abstractmethod
     def extract_tables(self):
         pass
+
+    @abstractmethod
+    def extract_metadata(self):
+        pass

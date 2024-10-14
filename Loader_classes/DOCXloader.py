@@ -5,6 +5,7 @@ import docx
 class DOCXloader(FileLoader):
     def __init__(self, file_path):
         super().__init__(file_path)
+        self.file_path = self.file_path
         self.loaded_doc = None
 
     def loadFile(self):

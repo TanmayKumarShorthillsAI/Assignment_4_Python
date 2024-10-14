@@ -14,20 +14,19 @@ class DOCXDataExtractor(DataExtractor):
         doc = self.file_loader.loaded_doc
         for para in doc.paragraphs:
             self.text.append(para.text)
-            # run = para.runs[0] if para.runs else None
-            # # if run and run.font:
-            # # font_name = run.font.name
-            # # font_size = run.font.size
-            # # bold = run.font.bold
-            # if self.is_heading(para):
-            #     self.text_metadata.append(
-            #         {"Heading": {para.text}, "Level": {para.style.name}}
-            #     )
-        # print(self.text_metadata)
+
         return self.text
 
     def extract_links(self):
-
+        # Access the document's relationships to find hyperlinks
+        # for rel in self.file.part.rels.values():
+        #     if "hyperlink" in rel.reltype:
+        #         hyperlink = rel.target_ref  # Extract the hyperlink URL
+        #         self.links.append(
+        #             {
+        #                 "url": hyperlink,
+        #             }
+        #         )
         return self.links
 
     def extract_images(self):
@@ -42,17 +41,6 @@ class DOCXDataExtractor(DataExtractor):
                 image_stream = BytesIO(image_blob)
                 image_extension = image_part.content_type.split("/")[-1]  #
 
-                # image = Image.open(image_stream)
-                # width, height = image.size
-                # image_format = image.format
-
-                # self.image_metadata.append(
-                #     {
-                #         "file_name": self.file_name,
-                #         "image_format": image_format,
-                #         "Resolution": str(width) + "x" + str(height),
-                #     }
-                # )
                 self.images.append({"blob": image_blob, "format": image_extension})
         # print(self.image_metadata)
         return self.images
@@ -103,7 +91,7 @@ class DOCXDataExtractor(DataExtractor):
                     {
                         "file_name": self.file_name,
                         "format": image_format,
-                        "Resolution": str(width) + "x" + str(height),
+                        "resolution": str(width) + "x" + str(height),
                     }
                 )
         return self.text_metadata, self.image_metadata

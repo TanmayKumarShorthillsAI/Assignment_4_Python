@@ -13,3 +13,5 @@ class PDFloader(FileLoader):
         if self.file_extention != ".pdf":
             raise TypeError("Not a .pdf file. Please provide a .pdf file")
         self.loaded_pdf = fitz.open(self.file_path)
+        # print(self.loaded_pdf.is_pdf)
+        # print("Pdf loaded!")

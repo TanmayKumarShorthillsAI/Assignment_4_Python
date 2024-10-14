@@ -15,3 +15,4 @@ class DOCXloader(FileLoader):
         if self.file_extention != ".docx":
             raise TypeError("Not a .docx file. Please provide a .docx file")
         self.loaded_doc = docx.Document(self.file_path)
+        # print(self.loaded_doc)

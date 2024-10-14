@@ -30,6 +30,11 @@ class SQLStorage(Storage):
             VALUES (%s, %s, %s, %s)
             """
 
+        insert_query2 = """
+            INSERT INTO tetx_metadata(font, heading, text)
+            VALUES (%s, %s, %s, %s)
+            """
+
         try:
             for i, x in enumerate(self.image_metadata):
                 values = (
@@ -38,8 +43,18 @@ class SQLStorage(Storage):
                     x["format"],
                     x["resolution"],
                 )
-
                 cursor.execute(insert_query, values)
+
+            for i, x in enumerate(self.text_metadata):
+                values = (
+                    i + 1,
+                    x["font"],
+                    x["heading"],
+                    x["text"],
+                )
+
+                cursor.execute(insert_query2, values)
+
             connection.commit()
             print(f"{cursor.rowcount} records inserted successfully.")
 

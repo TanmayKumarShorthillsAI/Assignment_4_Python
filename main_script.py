@@ -39,10 +39,14 @@ if os.path.splitext(file_path)[1] == ".pdf":
 if os.path.splitext(file_path)[1] == ".docx":
     docx_file_storage = FileStorage(load_and_extract_docx())
     docx_file_storage.save()
+    sql_storage = SQLStorage(load_and_extract_docx())
+    sql_storage.save()
 
 if os.path.splitext(file_path)[1] == ".pptx":
     pptx_file_storage = FileStorage(load_and_extract_pptx())
     pptx_file_storage.save()
+    sql_storage = SQLStorage(load_and_extract_pptx())
+    sql_storage.save()
 
 
 # sql_storage = SQLStorage(pdf_extractor)

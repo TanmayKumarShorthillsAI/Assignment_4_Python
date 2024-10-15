@@ -2,6 +2,70 @@
 
 ## Extract Text, Links, Images, and Tables from PDF, DOCX, and PPT with Metadata
 
+### File Structure:
+
+```
+├── Extractor_classes
+│   ├── DOCXDataExtractor.py
+│   ├── DataExtractor.py
+│   ├── PDFDataExtractor.py
+│   ├── PPTDataExtractor.py
+│   └── testing
+│       ├── test_DOCXDataExtarctor.py
+│       ├── test_PDFDataExtarctor.py
+│       └── test_PPTDataExtarctor.py
+├── Loader_classes
+│   ├── DOCXloader.py
+│   ├── FileLoader.py
+│   ├── PDFloader.py
+│   ├── PPTloader.py
+│   └── testing
+│       ├── test_DOCXloader.py
+│       ├── test_PDFloader.py
+│       └── test_PPTloader.py
+├── README.md
+├── Storage_classes
+│   ├── FileStorage.py
+│   ├── SQLStorage.py
+│   ├── Storage.py
+│   └── testing
+│       ├── test_FileStorage.py
+│       └── test_SQLStorage.py
+├── main_script.py
+```
+
+### Requirements:
+
+- Python version 3.10.x
+- pip
+
+```
+mysql-connector-python
+numpy
+pandas
+pillow
+PyMuPDF
+python-docx
+python-pptx
+tabula-py
+```
+
+### Install the requirements:
+
+```bash
+pip3 install mysql-connector-python numpy pandas pillow PyMuPDF python-docx python-pptx tabula-py
+```
+
+### Features:
+
+#### **For each file format in (.pdf, .pptx and .docx)**
+
+- **Text Extraction**: Extract text and its metadata(text font and headings)
+- **Image Extraction**: Extract image and its metadata(imgae extension, page number and image resolution)
+- **Link Extraction**: Extract hyperlinks present in the files.
+- **Table Extracttion**: Extract tables present in the files in .csv format.
+- **Storage of extracted data**: Storage of all of the above mentioned data into directories and SQL database.
+
 ### Loader classes:
 
 - FileLoader class is an abstarct class which provides defination for loading file into memory
@@ -29,3 +93,7 @@
 - The sql storage has database named file_extracted_data which contains three tables : pdf_data, docx_data and pptx_data.
 - These tables have the following fields: S.no, file_name, data_type(i.e. text, image, hyperlinks and tables) and extracted_data.
 - Storage_classes folder contains the testing folder with contains the test cases tested.
+
+### Usage
+
+- Run the `main_script.py` file in terminal and provide the file path as input.

@@ -1,0 +1,1 @@
+[{'file_name': 'sample_pdf', 'page_number': 0, 'resolution': '793x1058', 'format': 'jpeg'}, {'file_name': 'sample_pdf', 'page_number': 1, 'resolution': '793x1058', 'format': 'jpeg'}, {'file_name': 'sample_pdf', 'page_number': 1, 'resolution': '363x647', 'format': 'jpeg'}, {'file_name': 'sample_pdf', 'page_number': 2, 'resolution': '793x1058', 'format': 'jpeg'}]

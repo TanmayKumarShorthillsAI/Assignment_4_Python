@@ -5,12 +5,10 @@ Extarctor_classes/__pycache__/
 Loader_classes/__pycache__/
 Storage_classes/__pycache__/
 # output/
+Test_Files/
 
 test_script.py
 
 # Ignore sample pdfs, docx and other files
-*.pdf
-*.docx
-*.pptx
-*.txt
+License.txt
 Storage_classes/.env

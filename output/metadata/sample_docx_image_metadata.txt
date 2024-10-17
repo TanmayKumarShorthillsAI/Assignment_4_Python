@@ -1,0 +1,1 @@
+[{'file_name': 'sample_docx', 'format': 'JPEG', 'resolution': '2204x1653'}, {'file_name': 'sample_docx', 'format': 'JPEG', 'resolution': '1348x758'}]

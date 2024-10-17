@@ -9,59 +9,77 @@ load_dotenv()
 class SQLStorage(Storage):
     def __init__(self, data_extractor):
         super().__init__(data_extractor)
+        self.connection = mysql.connector.connect(
+            host=os.getenv("host"),
+            user=os.getenv("user"),
+            password=os.getenv("password"),
+            database=os.getenv("database"),
+        )
+
+        self.cursor = self.connection.cursor()
         self.text = data_extractor.extract_text()
         self.text_metadata, self.image_metadata = data_extractor.extract_metadata()
-        # self.image_metadata = data_extractor.image_metadata
         self.links = data_extractor.extract_links()
+        self.images = data_extractor.extract_images()
+
+    def insert_images(self):
+        insert_images_query = """
+            INSERT INTO images(file_name, image, image_format)
+            VALUES (%s, %s, %s)
+            """
+
+        for x in self.images:
+            values = (x["file_name"], x["blob"], x["format"])
+
+            self.cursor.execute(insert_images_query, values)
+
+    def insert_links(self):
+        insert_links_query = """
+            INSERT INTO links(file_name, url)
+            VALUES (%s, %s)
+            """
+
+        for x in self.links:
+            values = (
+                x["file_name"],
+                x["link"],
+            )
+
+            self.cursor.execute(insert_links_query, values)
+
+    def insert_images_metadata(self):
+        insert_image_metadata_query = """
+            INSERT INTO images_metadata(file_name, extension, resolution)
+            VALUES (%s, %s, %s)
+            """
+
+        for x in self.image_metadata:
+            values = (
+                x["file_name"],
+                x["format"],
+                x["resolution"],
+            )
+
+            self.cursor.execute(insert_image_metadata_query, values)
 
     def save(self):
-        connection = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="tanmay123",
-            database="file_extracted_data",
-        )
-        print(connection, self.image_metadata)
 
-        cursor = connection.cursor()
-
-        insert_query = """
-            INSERT INTO image_metadata(id, file_name, extention, resolution)
-            VALUES (%s, %s, %s, %s)
-            """
-
-        insert_query2 = """
-            INSERT INTO tetx_metadata(font, heading, text)
-            VALUES (%s, %s, %s, %s)
-            """
+        enter_records = [
+            self.insert_images_metadata,
+            self.insert_links,
+            self.insert_images,
+        ]
 
         try:
-            for i, x in enumerate(self.image_metadata):
-                values = (
-                    i + 1,
-                    x["file_name"],
-                    x["format"],
-                    x["resolution"],
-                )
-                cursor.execute(insert_query, values)
 
-            for i, x in enumerate(self.text_metadata):
-                values = (
-                    i + 1,
-                    x["font"],
-                    x["heading"],
-                    x["text"],
-                )
-
-                cursor.execute(insert_query2, values)
-
-            connection.commit()
-            print(f"{cursor.rowcount} records inserted successfully.")
+            for query in enter_records:
+                query()
+                self.connection.commit()
+                print(f"{self.cursor.rowcount} records inserted successfully.")
 
         except mysql.connector.Error as err:
             print(f"Error: {err}")
-            connection.rollback()
+            self.connection.rollback()
 
-        # Step 4: Close the cursor and the connection
-        cursor.close()
-        connection.close()
+        self.cursor.close()
+        self.connection.close()

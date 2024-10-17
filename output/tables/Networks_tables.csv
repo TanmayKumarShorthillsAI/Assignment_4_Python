@@ -1,0 +1,21 @@
+Subject,Max Marks,Avg Marks,Grade
+English,100,80,B
+Hindi,100,91,A+
+Maths,100,85,B+
+PH.E,200,175,A
+History,100,79,C+
+S.NO,LAN,WAN
+1),IT IS SPRED OVER A SMALL AREA,IT IS SPREAD OVER A VERY LARGE AREA
+2),IT IS USUALLY COSTS LESS TO SET IT UP,IT COSTS  HIGHER TO SET IT UP
+3),IT IS USUALLY A SINGLE NETWORK,IT IS USUALLY A NETWORK OF MANY NETWORK
+SERVICE,CLIENT SERVER ,P2P
+SECURITY,The server controls security of network ,No central control over security
+MANAGEMENT,"The server manages the network .
+Needs a  dedicated team of people to manage the server .","No central  control over the network .
+Any one can set up."
+SERVICE,CLIENT SERVER ,P2P
+DEPENDENCY,Clients are depend on the servers.,"Clients are not depend on central
+servers."
+SERVICE,CLIENT SERVER ,P2P
+PERFORMANCE,The server can be upgraded to be made more powerful to cope with high demand.,If machines  on the network are slow they will slow down other machines. 
+BACKUPS,Data is all  backed  up on the main server .,Each computer has to be backed up Data can easily be deleted by users . 

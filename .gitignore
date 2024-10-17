@@ -4,7 +4,7 @@ __pycache__/
 Extarctor_classes/__pycache__/
 Loader_classes/__pycache__/
 Storage_classes/__pycache__/
-output/
+# output/
 
 test_script.py
 

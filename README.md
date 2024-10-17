@@ -10,10 +10,6 @@
 │   ├── DataExtractor.py
 │   ├── PDFDataExtractor.py
 │   ├── PPTDataExtractor.py
-│   └── testing
-│       ├── test_DOCXDataExtarctor.py
-│       ├── test_PDFDataExtarctor.py
-│       └── test_PPTDataExtarctor.py
 ├── Loader_classes
 │   ├── DOCXloader.py
 │   ├── FileLoader.py
@@ -24,13 +20,12 @@
 │       ├── test_PDFloader.py
 │       └── test_PPTloader.py
 ├── README.md
+├── Output
+├── Sample_files
 ├── Storage_classes
 │   ├── FileStorage.py
 │   ├── SQLStorage.py
 │   ├── Storage.py
-│   └── testing
-│       ├── test_FileStorage.py
-│       └── test_SQLStorage.py
 ├── main_script.py
 ```
 
@@ -82,7 +77,6 @@ pip3 install mysql-connector-python numpy pandas pillow PyMuPDF python-docx pyth
 - Clsases: PDFDataExtarctor, DOCXDataExtarctor and PPTDataExtarctorare concrete calsses that implement the abstract methods named in the abstarct class DataExatrctor.
 - For table extraction in pdf files tabula-py library is used.
 - The extracted data is stored in lists (images as blobs) and returned.
-- Extractor_classes folder contains the testing folder with contains the test cases tested.
 
 ### Storage classes:
 
@@ -92,7 +86,6 @@ pip3 install mysql-connector-python numpy pandas pillow PyMuPDF python-docx pyth
 - Text and hyperlinks are stored as .txt files and tables as csv files and images as jepg or png.
 - The sql storage has database named file_extracted_data which contains three tables : pdf_data, docx_data and pptx_data.
 - These tables have the following fields: S.no, file_name, data_type(i.e. text, image, hyperlinks and tables) and extracted_data.
-- Storage_classes folder contains the testing folder with contains the test cases tested.
 
 ### Usage
 

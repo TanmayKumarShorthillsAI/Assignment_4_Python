@@ -6,7 +6,7 @@ from PIL import Image
 class DOCXDataExtractor(DataExtractor):
     def __init__(self, file_loader):
         super().__init__(file_loader)
-        self.doc = self.file_loader.loaded_doc
+        self.doc = self.file_loader.loaded_file
 
     def is_heading(self, paragraph):
         return paragraph.style.name.startswith("Heading")

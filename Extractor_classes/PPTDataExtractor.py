@@ -4,7 +4,7 @@ from Extractor_classes.DataExtractor import DataExtractor
 class PPTDataExtractor(DataExtractor):
     def __init__(self, file_loader):
         super().__init__(file_loader)
-        self.doc = self.file_loader.loaded_pptx
+        self.doc = self.file_loader.loaded_file
 
     def extract_text(self):
         for slide_num, slide in enumerate(self.doc.slides):
@@ -86,7 +86,6 @@ class PPTDataExtractor(DataExtractor):
                             {
                                 "page_number": slide_num + 1,
                                 "text": text,
-                                # "font_size": font_size,
                                 "heading": heading,
                                 "font": font_name,
                             }

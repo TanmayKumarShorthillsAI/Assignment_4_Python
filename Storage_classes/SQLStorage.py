@@ -6,9 +6,12 @@ import os
 load_dotenv()
 
 
+# class to store extarcted data(images, images_metadata and links) in MySQL database.
 class SQLStorage(Storage):
     def __init__(self, data_extractor):
         super().__init__(data_extractor)
+
+        # initialize the MySQL connection and create a cursor for the entire save method
         self.connection = mysql.connector.connect(
             host=os.getenv("host"),
             user=os.getenv("user"),
@@ -22,6 +25,38 @@ class SQLStorage(Storage):
         self.links = data_extractor.extract_links()
         self.images = data_extractor.extract_images()
 
+    def create_tables_if_not_exists(self):
+        create_tables_query = [
+            """
+            CREATE TABLE IF NOT EXISTS images_metadata (
+                file_name VARCHAR(100),
+                extension VARCHAR(255),
+                resolution TEXT
+            );     
+        """,
+            """
+             CREATE TABLE IF NOT EXISTS images (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                file_name VARCHAR(255) NOT NULL,
+                image mediumblob NOT NULL,
+                image_format TEXT NOT NULL
+            );
+        """,
+            """
+            CREATE TABLE IF NOT EXISTS links (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                file_name VARCHAR(255) NOT NULL,
+                url VARCHAR(500) NOT NULL
+            );
+        """,
+        ]
+        try:
+            for q in create_tables_query:
+                self.cursor.execute(q)
+                self.connection.commit()
+        except Exception as e:
+            print(e)
+
     def insert_images(self):
         insert_images_query = """
             INSERT INTO images(file_name, image, image_format)
@@ -31,7 +66,10 @@ class SQLStorage(Storage):
         for x in self.images:
             values = (x["file_name"], x["blob"], x["format"])
 
-            self.cursor.execute(insert_images_query, values)
+            try:
+                self.cursor.execute(insert_images_query, values)
+            except Exception as e:
+                print(e)
 
     def insert_links(self):
         insert_links_query = """
@@ -45,7 +83,10 @@ class SQLStorage(Storage):
                 x["link"],
             )
 
-            self.cursor.execute(insert_links_query, values)
+            try:
+                self.cursor.execute(insert_links_query, values)
+            except Exception as e:
+                print(e)
 
     def insert_images_metadata(self):
         insert_image_metadata_query = """
@@ -60,9 +101,13 @@ class SQLStorage(Storage):
                 x["resolution"],
             )
 
-            self.cursor.execute(insert_image_metadata_query, values)
+            try:
+                self.cursor.execute(insert_image_metadata_query, values)
+            except Exception as e:
+                print(e)
 
     def save(self):
+        self.create_tables_if_not_exists()
 
         enter_records = [
             self.insert_images_metadata,

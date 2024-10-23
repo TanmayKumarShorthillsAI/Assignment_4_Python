@@ -89,4 +89,5 @@ pip3 install mysql-connector-python numpy pandas pillow PyMuPDF python-docx pyth
 
 ### Usage
 
+- Install the dependencies mentions above adn set your environment variables.
 - Run the `main_script.py` file in terminal and provide the file path as input.

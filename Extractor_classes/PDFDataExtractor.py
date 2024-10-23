@@ -6,7 +6,7 @@ import tabula
 class PDFDataExtractor(DataExtractor):
     def __init__(self, file_loader):
         super().__init__(file_loader)
-        self.doc = self.file_loader.loaded_pdf
+        self.doc = self.file_loader.loaded_file
 
     # Extract text from pdf
     def extract_text(self):
@@ -24,7 +24,7 @@ class PDFDataExtractor(DataExtractor):
 
             # Extract and process each image
             for img_index, img in enumerate(images):
-                xref = img[0]  # XREF of the image
+                xref = img[0]
                 base_image = self.doc.extract_image(xref)
                 image_bytes = base_image["image"]
                 image_ext = base_image["ext"]
@@ -45,7 +45,6 @@ class PDFDataExtractor(DataExtractor):
             page = self.doc.load_page(page_num)
 
             for link in page.get_links():
-                # print(link)
                 if "uri" in link:
                     self.links.append(
                         {"file_name": self.file_name, "link": link["uri"]}

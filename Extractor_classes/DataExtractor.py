@@ -3,7 +3,6 @@ from Loader_classes.FileLoader import FileLoader
 
 
 class DataExtractor(ABC):
-
     def __init__(self, file_loader: FileLoader):
         self.file_loader = file_loader
         self.file_loader.loadFile()
@@ -14,7 +13,6 @@ class DataExtractor(ABC):
         self.images = []
         self.links = []
         self.tables = []
-        # print(self.file_loader.loaded_pdf)
 
     @abstractmethod
     def extract_text(self):

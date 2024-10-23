@@ -1,6 +1,7 @@
 # ignore virtual environment an pycache
 myenv/
 __pycache__/
+.pytest_cache
 Extarctor_classes/__pycache__/
 Loader_classes/__pycache__/
 Storage_classes/__pycache__/
